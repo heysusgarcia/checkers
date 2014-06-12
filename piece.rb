@@ -23,6 +23,7 @@ class Piece
     @board[new_pos[0], new_pos[1]] = self
     self.position = new_pos
     @board[curr_row, curr_col] = nil
+    maybe_promote
   end
 
   def perform_jump(new_pos)
@@ -35,11 +36,9 @@ class Piece
     self.position = new_pos
     @board[curr_row, curr_col] = nil
     @board[jumped_row, jumped_col] = nil
+    maybe_promote
   end
 
-  def moves
-  end
-  
   def sliding_moves
     moves = []
     steps = move_diffs
@@ -88,7 +87,9 @@ class Piece
     @king
   end
   
-  def promote?
+  def maybe_promote
+    @king = true if color == :b && position[0] == 0
+    @king = true if color == :r && position[0] == 7
   end
 
 
