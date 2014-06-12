@@ -78,9 +78,9 @@ end
 
 # p board = Board.new
 # p board.render
-# r = Piece.new(:r, board, [2, 3])
-# b1 = Piece.new(:b, board, [3, 2])
-# b2 = Piece.new(:b, board, [3, 4])
-# board[2, 3] = r; board[3, 2] = b1; board[3, 4] = b2
+# r = Piece.new(:r, b, [2, 3])
+# b1 = Piece.new(:b, b, [3, 2])
+# b2 = Piece.new(:b, b, [3, 4])
+# b[2, 3] = r; b[3, 2] = b1; b[3, 4] = b2
 # p board.render
 
