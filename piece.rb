@@ -18,8 +18,10 @@ class Piece
   end
   
   def valid_move_seq?(moves)
+    dup_board = @board.dup
+    dup_piece = dup_board[position[0], position[1]]
     begin
-      perform_moves!(moves)
+      dup_piece.perform_moves!(moves)
     rescue InvalidMoveError
       false
     else
@@ -27,15 +29,23 @@ class Piece
     end
   end
   
-  def perform_moves!(moves)
-    moved = perform_slide(moves[0]) || peform_jump(moves[0])  
-    raise InvalidMoveError.new "Not a valid move" unless moved
+  def perform_moves(moves)
+    if valid_move_seq?(moves)
+      peform_moves!(moves)
+    else
+      raise InvalidMoveError.new "Move sequence isn't valid"
+    end
+  end
   
-    dup_board = @board.dup
-    dup_piece = dup_board[position[0], position[1]]   
-    until moves.empty? 
-      moved = perform_jump(moves.shift)
-      raise InvalidMoveError.new "Not a valid move" unless moved
+  def perform_moves!(moves)
+    if moves.count == 1
+      moved = perform_slide(moves[0]) || peform_jump(moves[0])  
+      raise InvalidMoveError.new "Move sequence isn't valid" unless moved
+    else 
+      moves.each do |move| 
+        moved = perform_jump(moves.shift)
+        raise InvalidMoveError.new "Move sequence isn't valid" unless moved
+      end
     end 
     true
   end
