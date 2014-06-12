@@ -33,10 +33,15 @@ class Board
   def dup
     dup_board = Board.new
     
-    dup_board.each_with_index do |row, indx1|
+    dup_board.board.each_with_index do |row, indx1|
       row.each_with_index do |piece, indx2|
+        next if piece.nil?
+        new_piece = Piece.new(piece.color, dup_board, piece.position)
+        new_piece.king = true if piece.king
+        dup_board[indx1, indx2] = new_piece
       end
     end
+    dup_board
   end
   
   def in_range?(row, col)
