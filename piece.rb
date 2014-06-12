@@ -16,10 +16,25 @@ class Piece
     @king = false
   end
 
-  def perform_slide
+  def perform_slide(new_pos)
+    sliding_moves = self.sliding_moves
+    raise "Invalid Slide" unless sliding_moves.include?(new_pos)
+    curr_row, curr_col = self.position
+    @board[new_pos[0], new_pos[1]] = self
+    self.position = new_pos
+    @board[curr_row, curr_col] = nil
   end
 
-  def perform_jump
+  def perform_jump(new_pos)
+    jumping_moves = self.jumping_moves
+    raise "Invalid Jump" unless jumping_moves.include?(new_pos)
+    curr_row, curr_col = self.position
+    jumped_row = ((curr_row + new_pos[0]) / 2 )  
+    jumped_col = ((curr_col + new_pos[1]) / 2 )
+    @board[new_pos[0], new_pos[1]] = self
+    self.position = new_pos
+    @board[curr_row, curr_col] = nil
+    @board[jumped_row, jumped_col] = nil
   end
 
   def moves
