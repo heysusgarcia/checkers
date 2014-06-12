@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Piece
 
   attr_accessor :king, :position
@@ -16,6 +17,16 @@ class Piece
     @king = false
   end
   
+  def valid_move_seq?(moves)
+    begin
+      perform_moves!(moves)
+    rescue InvalidMoveError
+      false
+    else
+      true
+    end
+  end
+  
   def perform_moves!(moves)
     moved = perform_slide(moves[0]) || peform_jump(moves[0])  
     raise InvalidMoveError.new "Not a valid move" unless moved
@@ -26,6 +37,7 @@ class Piece
       moved = perform_jump(moves.shift)
       raise InvalidMoveError.new "Not a valid move" unless moved
     end 
+    true
   end
   
   def perform_slide(new_pos)

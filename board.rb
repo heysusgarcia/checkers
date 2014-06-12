@@ -1,3 +1,4 @@
+# encoding: utf-8
 require './piece.rb'
 require 'colorize'
 
@@ -32,7 +33,6 @@ class Board
   
   def dup
     dup_board = Board.new
-    
     dup_board.board.each_with_index do |row, indx1|
       row.each_with_index do |piece, indx2|
         next if piece.nil?
