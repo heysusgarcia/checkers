@@ -17,14 +17,15 @@ class Piece
   end
   
   def perform_moves!(moves)
+    moved = perform_slide(moves[0]) || peform_jump(moves[0])  
+    raise InvalidMoveError.new "Not a valid move" unless moved
+  
     dup_board = @board.dup
-    dup_piece = dup_board[position[0], position[1]]
-    
-    if moves.length == 1
-      
-    
-    until moves.empty?
-      
+    dup_piece = dup_board[position[0], position[1]]   
+    until moves.empty? 
+      moved = perform_jump(moves.shift)
+      raise InvalidMoveError.new "Not a valid move" unless moved
+    end 
   end
   
   def perform_slide(new_pos)
