@@ -37,11 +37,15 @@ class Board
       row.each_with_index do |piece, indx2|
         next if piece.nil?
         new_piece = Piece.new(piece.color, dup_board, piece.position)
-        new_piece.king = true if piece.king
+        new_piece.king = true if piece.king?
         dup_board[indx1, indx2] = new_piece
       end
     end
     dup_board
+  end
+  
+  def get_pieces(color)
+    @board.flatten.compact.select { |piece| piece.color == color }
   end
   
   def in_range?(row, col)
