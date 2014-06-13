@@ -31,7 +31,7 @@ class Piece
   
   def perform_moves(moves)
     if valid_move_seq?(moves)
-      peform_moves!(moves)
+      perform_moves!(moves)
     else
       raise InvalidMoveError.new "Move sequence isn't valid"
     end
@@ -39,7 +39,7 @@ class Piece
   
   def perform_moves!(moves)
     if moves.count == 1
-      moved = perform_slide(moves[0]) || peform_jump(moves[0])  
+      moved = perform_slide(moves[0]) || perform_jump(moves[0])  
       raise InvalidMoveError.new "Move sequence isn't valid" unless moved
     else 
       moves.each do |move| 
@@ -82,7 +82,6 @@ class Piece
       row_step, col_step = step
       curr_row, curr_col = position
       new_row, new_col = (curr_row + row_step), (curr_col + col_step)
-      puts @board
       if @board.in_range?(new_row, new_col) && @board[new_row, new_col].nil?
         moves << [new_row, new_col]
       end

@@ -12,13 +12,13 @@ class Board
   
   def setup_board
     0.upto(7).each do |col|
-      @board[0][col] = Piece.new(:r, @board,[0, col]) unless col.even?
-      @board[1][col] = Piece.new(:r, @board,[1, col]) unless col.odd?
-      @board[2][col] = Piece.new(:r, @board,[2, col]) unless col.even?
-
-      @board[5][col] = Piece.new(:b, @board, [5, col]) unless col.odd?
-      @board[6][col] = Piece.new(:b, @board, [6, col]) unless col.even?
-      @board[7][col] = Piece.new(:b, @board, [7, col]) unless col.odd?
+      @board[0][col] = Piece.new(:r, self,[0, col]) unless col.even?
+      @board[1][col] = Piece.new(:r, self,[1, col]) unless col.odd?
+      @board[2][col] = Piece.new(:r, self,[2, col]) unless col.even?
+                                       
+      @board[5][col] = Piece.new(:b, self, [5, col]) unless col.odd?
+      @board[6][col] = Piece.new(:b, self, [6, col]) unless col.even?
+      @board[7][col] = Piece.new(:b, self, [7, col]) unless col.odd?
     end    
   end
   
@@ -33,7 +33,7 @@ class Board
   
   def dup
     dup_board = Board.new
-    dup_board.board.each_with_index do |row, indx1|
+    board.each_with_index do |row, indx1|
       row.each_with_index do |piece, indx2|
         next if piece.nil?
         new_piece = Piece.new(piece.color, dup_board, piece.position)

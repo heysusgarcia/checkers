@@ -10,6 +10,7 @@ class Game
   def initialize(player1, player2)
     @board = Board.new
     @board.setup_board
+    puts board
     @player1 = HumanPlayer.new(player1, :b)
     @player2 = HumanPlayer.new(player2, :r)
     @turn = :b 
@@ -30,9 +31,17 @@ class Game
       puts "Begin by entering starting position followed by remaining" 
       puts "moves as follows 01 23 ..."
       move_seq = get_move_seq
-      start_pos = get_move_seq.shift
+      
+      p "move seq: #{move_seq}"
+      start_pos = move_seq.shift
+      
+      p "start_pos[0][0]: #{start_pos[0]}"
+      p "start_pos[0][1]: #{start_pos[1]}"
       
       piece = @board[start_pos[0], start_pos[1]]
+      
+
+      p "position: #{piece.position}"
       piece.perform_moves(move_seq)
     rescue InvalidMoveError => e
       puts e
