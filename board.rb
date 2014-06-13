@@ -49,7 +49,8 @@ class Board
   end
   
   def in_range?(row, col)
-    (row >= 0 && row < 8) && (col >= 0 && col < 8)
+    (0..7).include?(row) && (0..7).include?(col)
+    # (row >= 0 && row < 8) && (col >= 0 && col < 8)
   end
   
   def display

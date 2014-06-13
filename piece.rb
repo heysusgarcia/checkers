@@ -82,6 +82,7 @@ class Piece
       row_step, col_step = step
       curr_row, curr_col = position
       new_row, new_col = (curr_row + row_step), (curr_col + col_step)
+      puts @board
       if @board.in_range?(new_row, new_col) && @board[new_row, new_col].nil?
         moves << [new_row, new_col]
       end

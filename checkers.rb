@@ -1,7 +1,7 @@
 require './board.rb'
 require './piece.rb'
 require './human_player.rb'
-require './invalid_move_errors.rb'
+require './invalid_move_error.rb'
 
 class Game
   
@@ -10,8 +10,8 @@ class Game
   def initialize(player1, player2)
     @board = Board.new
     @board.setup_board
-    @player1 = Player.new(player1, :b)
-    @player2 = Player.new(player2, :r)
+    @player1 = HumanPlayer.new(player1, :b)
+    @player2 = HumanPlayer.new(player2, :r)
     @turn = :b 
   end  
   
@@ -21,19 +21,20 @@ class Game
     
     until won?(:r) || won?(:b)
       
+      @board.display
+      
       begin
       player = @turn == :b ? player1 : player2
       
       puts "#{player.name}, it is your turn. You are #{player.color}."
-      puts "please begin by enter starting position as follows 01"
-      start_pos = get_start_pos 
-      
-      puts "Please enter your move sequence as follows 01 12 ..."
+      puts "Begin by entering starting position followed by remaining" 
+      puts "moves as follows 01 23 ..."
       move_seq = get_move_seq
+      start_pos = get_move_seq.shift
       
       piece = @board[start_pos[0], start_pos[1]]
       piece.perform_moves(move_seq)
-    rescue InvalidMoveError =>
+    rescue InvalidMoveError => e
       puts e
       retry
     end
@@ -41,12 +42,10 @@ class Game
     end
   end
   
-  def get_start_pos
-    input = gets.chomp.split(" ").split("").map { |arr| arr.map { |i| i.to_i} }
-  end
-  
   def get_move_seq
-    input = gets.chomp.split(" ").split("").map { |arr| arr.map { |i| i.to_i} }
+    input = gets.chomp.split(" ").map do |arr| 
+      arr.split("")
+    end.map { |arr| arr.map { |coord| coord.to_i } } 
   end
   
   def won?(color) #
@@ -72,5 +71,5 @@ end
 
 if __FILE__ == $PROGRAM_NAME
   checkers = Game.new("Jesus", "Jeremy")
-  checker.play
+  checkers.play
 end
