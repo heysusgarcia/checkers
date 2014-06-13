@@ -43,7 +43,7 @@ class Piece
       raise InvalidMoveError.new "Move sequence isn't valid" unless moved
     else 
       moves.each do |move| 
-        moved = perform_jump(moves.shift)
+        moved = perform_jump(move)
         raise InvalidMoveError.new "Move sequence isn't valid" unless moved
       end
     end 
