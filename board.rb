@@ -31,11 +31,13 @@ class Board
     @board[row][col] = piece
   end
   
-  def dup
+  def deep_dup
     dup_board = Board.new
     board.each_with_index do |row, indx1|
       row.each_with_index do |piece, indx2|
         next if piece.nil?
+        puts "color: #{piece.color}"
+        puts "piece instance of piece?: #{piece.is_a?(Piece)}"
         new_piece = Piece.new(piece.color, dup_board, piece.position)
         new_piece.king = true if piece.king?
         dup_board[indx1, indx2] = new_piece
@@ -75,17 +77,4 @@ class Board
       return str.colorize( :color => :white, :background => :black )
     end
   end
-
-
-
 end
-
-
-# p board = Board.new
-# p board.render
-# r = Piece.new(:r, b, [2, 3])
-# b1 = Piece.new(:b, b, [3, 2])
-# b2 = Piece.new(:b, b, [3, 4])
-# b[2, 3] = r; b[3, 2] = b1; b[3, 4] = b2
-# p board.render
-

@@ -1,4 +1,5 @@
 # encoding: utf-8
+require './board.rb'
 class Piece
 
   attr_accessor :king, :position
@@ -18,7 +19,7 @@ class Piece
   end
   
   def valid_move_seq?(moves)
-    dup_board = @board.dup
+    dup_board = @board.deep_dup
     dup_piece = dup_board[position[0], position[1]]
     begin
       dup_piece.perform_moves!(moves)
@@ -51,7 +52,6 @@ class Piece
   end
   
   def perform_slide(new_pos)
-    sliding_moves = self.sliding_moves
     return false if !sliding_moves.include?(new_pos)
     curr_row, curr_col = self.position
     @board[new_pos[0], new_pos[1]] = self
@@ -62,8 +62,7 @@ class Piece
   end
 
   def perform_jump(new_pos)
-    jumping_moves = self.jumping_moves
-    return false if !sliding_moves.include?(new_pos)
+    return false if !jumping_moves.include?(new_pos)
     curr_row, curr_col = self.position
     jumped_row = ((curr_row + new_pos[0]) / 2 )  
     jumped_col = ((curr_col + new_pos[1]) / 2 )
@@ -126,8 +125,4 @@ class Piece
     @king = true if color == :b && position[0] == 0
     @king = true if color == :r && position[0] == 7
   end
-
-
-
-
 end
